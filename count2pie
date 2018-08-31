@@ -1,0 +1,23 @@
+#!/usr/bin/env python
+# Counts To Pie Charts
+# wc -l *.C | head -n-1 | ./count2pie
+from sys import argv, stdin
+from os import getpid
+from matplotlib import pyplot
+
+explode = None
+# Example: '(0.1, 0, 0, 0)'
+if len(argv) > 1: explode = eval(argv[1])
+
+values = []
+labels = []
+def addit(v,l):
+     values.append(int(v))
+     labels.append(l)
+
+for l in stdin: addit(*l.strip().split())
+
+pyplot.pie(values, labels=labels, explode=explode,
+           shadow=True, autopct='%1.1f%%', startangle=90)
+exit(pyplot.savefig("fig-%d.png" % getpid()))
+
