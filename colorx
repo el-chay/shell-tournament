@@ -1,0 +1,38 @@
+#!/usr/bin/perl -s
+use Term::ANSIColor qw(colored);
+use Pod::Usage qw(pod2usage);
+pod2usage('-verbose' => 1) if $h;
+$c = $c ? $c : "bold red";
+while(<STDIN>){
+    foreach $rx (@ARGV) {s/$rx/@{[colored($&, $c)]}/g;}
+    print;
+}
+=head1 COLORX
+
+Colorize your standard output using Perl's regular expressions.
+
+=head1 SYNOPSIS
+
+colorx [ -c="color" ] 'regex-1' .. 'regex-n'
+
+=head1 DESCRIPTION
+
+=over
+
+=item B<-c='bold red'>
+
+Sets default color. For available colors check B<perldoc Term::ANSIColor>.
+
+=item B<'regex-1' .. 'regex-n'>
+
+Regular expressions to colorize.
+
+=item Examples:
+
+Colorize ip addresses and interface names:
+
+B<ip addr | colorx 'inet6? \K\S+' '^\d+: \K\S\+'>
+
+=back
+
+=cut
