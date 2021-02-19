@@ -1,0 +1,5 @@
+# Function for 'deep ps':
+# Recursively find childs, for a given process.
+# Usage:
+#    deeps <pid list>
+deeps () for P in "$@"; do echo $P; deeps $(pgrep -P $P); done
